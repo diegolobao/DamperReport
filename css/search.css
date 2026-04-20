@@ -230,6 +230,37 @@
 }
 
 /* ========================================================================
+   Header - Botão Admin
+   ======================================================================== */
+
+/* Posicionar header como relative para permitir absolute positioning do botão */
+.header {
+    position: relative;
+}
+
+.admin-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+}
+
+.admin-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
+.admin-link:active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ========================================================================
    Layout Desktop (>= 1024x768)
    ======================================================================== */
 
