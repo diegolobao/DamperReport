@@ -511,7 +511,11 @@ GET    /api/reports?tag=xxx&start_date=xxx&end_date=xxx&status=xxx
 | Fase 8 | 1 dia | Fase 2 |
 | Fase 9 | 3 dias | Todas anteriores |
 | Fase 10 | 2 dias | Todas anteriores |
-| **TOTAL** | **~23 dias** | |
+| **Fase 11 (IE8 - OPCIONAL)** | **2-3 dias** | **Apenas se IE10/IE11 impossível** |
+| **TOTAL (sem Fase 11)** | **~23 dias** | |
+| **TOTAL (com Fase 11)** | **~25-26 dias** | |
+
+**Nota:** Fase 11 é um plano de contingência. **Recomendação oficial:** Atualizar para IE10/IE11 (10 minutos) ao invés de executar Fase 11.
 
 ---
 
@@ -561,6 +565,239 @@ GET    /api/reports?tag=xxx&start_date=xxx&end_date=xxx&status=xxx
 
 ---
 
+## 🆘 Fase 11: Adaptação para IE8 (OPCIONAL - APENAS SE IE10/IE11 FOR IMPOSSÍVEL)
+
+**⚠️ IMPORTANTE:** Esta fase é um **plano de contingência** caso seja absolutamente impossível atualizar para IE10 ou IE11.
+
+**Recomendação oficial:** Atualizar para IE10/IE11 (10 minutos) ao invés de adaptar o código (2-3 dias)
+
+### Quando considerar esta fase?
+- ✅ Impossibilidade técnica de atualizar IE na VM
+- ✅ Restrições corporativas que impedem atualização
+- ❌ Preguiça de atualizar (NÃO é justificativa válida)
+- ❌ "Só para testar" (desperdício de tempo)
+
+### Task 11.1: Adicionar Bibliotecas Vendor (IE8)
+
+**Bibliotecas necessárias:**
+- [ ] JSON2.js (compatibilidade JSON)
+- [ ] ES5-shim.js + ES5-sham.js (métodos ES5)
+- [ ] Criar `js/vendor/` para armazenar bibliotecas
+
+**Onde baixar:**
+- JSON2: https://github.com/douglascrockford/JSON-js/blob/master/json2.js
+- ES5-shim: https://github.com/es-shims/es5-shim/releases
+
+**Critérios de aceitação:**
+- [ ] Bibliotecas vendor baixadas e organizadas em `js/vendor/`
+- [ ] Scripts carregados na ordem correta (ver IE8.md)
+
+---
+
+### Task 11.2: Implementar Storage Shims
+
+**Criar arquivo: `js/ie8-storage-shim.js`**
+
+**Implementações necessárias:**
+- [ ] localStorage fallback (usar cookies)
+- [ ] sessionStorage fallback (usar objeto em memória)
+- [ ] Funções de teste para detectar suporte real
+
+**Critérios de aceitação:**
+- [ ] localStorage funciona ou usa cookies fallback
+- [ ] sessionStorage funciona ou usa memória temporária
+- [ ] Dados persistem corretamente em ambos os casos
+
+---
+
+### Task 11.3: Modificar JavaScript para IE8
+
+**Arquivos a modificar:**
+
+**js/polyfills.js:**
+- [ ] Melhorar addEventListener/removeEventListener
+- [ ] Adicionar suporte completo para attachEvent
+- [ ] Polyfill para querySelectorAll (se necessário)
+
+**js/api.js:**
+- [ ] Criar função createXHR() com ActiveX fallback
+- [ ] Substituir new XMLHttpRequest() por createXHR()
+- [ ] Testar compatibilidade CORS (pode não funcionar)
+
+**js/search.js:**
+- [ ] Substituir evento 'input' por 'keyup' + 'propertychange'
+- [ ] Validar localStorage com try/catch
+- [ ] Usar getElementById ao invés de querySelectorAll quando possível
+
+**js/admin.js:**
+- [ ] Validar funcionamento de localStorage/cookies
+- [ ] Testar CRUD completo
+- [ ] Adicionar tratamento de erros específicos IE8
+
+**js/auth.js:**
+- [ ] Testar sessionStorage shim
+- [ ] Validar expiração de sessão em memória
+
+**Critérios de aceitação:**
+- [ ] Todos os scripts funcionam em IE8 com shims
+- [ ] Eventos capturam corretamente (keyup, propertychange)
+- [ ] AJAX funciona com ActiveX fallback
+- [ ] Sem erros no console do IE8
+
+---
+
+### Task 11.4: Modificar CSS para IE8
+
+**Arquivos a modificar:**
+
+**css/main.css:**
+- [ ] Substituir `opacity` por `opacity + filter: alpha(opacity=X)`
+- [ ] Remover ou comentar `border-radius` (não suportado)
+- [ ] Remover ou comentar `box-shadow` (não suportado)
+- [ ] Remover ou comentar `transition` (não suportado)
+- [ ] Converter `rgba()` para `rgb() + filter` com gradiente
+
+**css/search.css:**
+- [ ] Aplicar mudanças de opacity
+- [ ] Validar layout sem border-radius
+
+**css/admin.css:**
+- [ ] Aplicar mudanças de opacity
+- [ ] Validar modal sem box-shadow
+- [ ] Aceitar visual mais "quadrado" sem arredondamentos
+
+**Critérios de aceitação:**
+- [ ] Layout não quebra em IE8
+- [ ] Opacidade renderiza corretamente (com filter)
+- [ ] Visual aceitável sem propriedades modernas
+- [ ] Cores e contraste mantidos
+
+---
+
+### Task 11.5: Atualizar Ordem de Carregamento de Scripts
+
+**Modificar index.html e admin.html:**
+
+**Ordem crítica:**
+```html
+<!-- 1. JSON2 (PRIMEIRO) -->
+<script src="js/vendor/json2.min.js"></script>
+
+<!-- 2. ES5-shim -->
+<script src="js/vendor/es5-shim.min.js"></script>
+<script src="js/vendor/es5-sham.min.js"></script>
+
+<!-- 3. Polyfills IE8 -->
+<script src="js/polyfills.js"></script>
+<script src="js/ie8-storage-shim.js"></script>
+
+<!-- 4. Scripts normais -->
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+...
+```
+
+**Critérios de aceitação:**
+- [ ] Scripts carregam na ordem correta
+- [ ] Polyfills carregam antes de scripts dependentes
+- [ ] Sem erros de "undefined" no console
+
+---
+
+### Task 11.6: Testes Completos em IE8
+
+**Checklist de testes funcionais:**
+- [ ] Página index.html carrega sem erros
+- [ ] Página admin.html carrega sem erros
+- [ ] Máscara de data funciona (keyup)
+- [ ] Select Tag carrega valores do localStorage/cookies
+- [ ] Formulário de busca valida campos
+- [ ] Login/Logout funcionam
+- [ ] CRUD admin funciona (Create, Read, Update, Delete)
+- [ ] Modal de confirmação abre e fecha
+- [ ] Paginação funciona
+- [ ] AJAX funciona (se backend disponível)
+
+**Checklist de testes visuais:**
+- [ ] Layout não quebra em 1024x768
+- [ ] Cores renderizam corretamente
+- [ ] Opacidade funciona (com filter)
+- [ ] Botões têm estados hover
+- [ ] Tabelas são legíveis
+- [ ] Formulários são acessíveis
+
+**Critérios de aceitação:**
+- [ ] Todas as funcionalidades críticas funcionam
+- [ ] Visual aceitável (sem border-radius/box-shadow)
+- [ ] Performance aceitável (pode ser ~30% mais lenta)
+- [ ] Sem crashes ou erros críticos
+
+---
+
+### Task 11.7: Documentação de Limitações IE8
+
+**Criar/Atualizar docs/IE8.md:**
+- [x] Documentar todas as limitações conhecidas
+- [x] Lista de recursos visuais removidos
+- [x] Lista de polyfills utilizados
+- [x] Instruções de teste em IE8
+- [x] Comparação IE8 vs IE10
+
+**Atualizar README.md:**
+- [ ] Adicionar seção sobre suporte IE8 opcional
+- [ ] Documentar processo de setup (bibliotecas vendor)
+- [ ] Avisar sobre limitações visuais
+
+**Critérios de aceitação:**
+- [ ] Documentação completa e clara
+- [ ] Futuras manutenções sabem das limitações
+- [ ] Processo de setup documentado
+
+---
+
+## 📊 Estimativa de Esforço - Fase 11 (IE8)
+
+| Task | Duração Estimada |
+|------|------------------|
+| 11.1: Bibliotecas Vendor | 1 hora |
+| 11.2: Storage Shims | 2-3 horas |
+| 11.3: Modificar JavaScript | 6-8 horas |
+| 11.4: Modificar CSS | 3-4 horas |
+| 11.5: Ordem Scripts | 30 min |
+| 11.6: Testes IE8 | 4-6 horas |
+| 11.7: Documentação | 1-2 horas |
+| **TOTAL** | **~2-3 dias** |
+
+**Comparação:**
+- Atualizar para IE10/IE11: **10 minutos**
+- Adaptar código para IE8: **2-3 dias**
+
+---
+
+## ⚠️ Decisão: IE8 vs IE10/IE11
+
+**Recomendação final da equipe:**
+
+✅ **ATUALIZAR PARA IE10/IE11** (escolha padrão)
+- Windows 7 suporta até IE11 oficialmente
+- Instalação leva ~10 minutos
+- 100% compatível com código atual
+- Sem limitações visuais ou funcionais
+- Melhor performance
+- Mais fácil de manter
+
+❌ **ADAPTAR PARA IE8** (última alternativa)
+- Somente se atualização for tecnicamente impossível
+- Requer 2-3 dias de trabalho
+- Código fica +50% maior e mais lento
+- Perde recursos visuais (border-radius, box-shadow, transitions)
+- Muito mais difícil de manter
+- Performance ~30% mais lenta
+
+**Consultar documentação:** [docs/IE8.md](docs/IE8.md)
+
+---
+
 ## 📞 Próximos Passos
 
 1. Responder questões pendentes
@@ -583,11 +820,11 @@ GET    /api/reports?tag=xxx&start_date=xxx&end_date=xxx&status=xxx
 - ⏳ Fase 6: Integração com Backend (SQLite + FastAPI + Dual Storage)
 
 **Arquivos Criados:**
-- 2 HTML (index.html, admin.html)
+- 2 HTML (index.html, admin.html, teste.html)
 - 4 CSS (normalize, main, search, admin)
 - 9 JS (polyfills, utils, api, auth, search, admin, mock-data*, init-sample-data*)
   - *Arquivos temporários que serão removidos na migração
-- README.md + compatibility.md + TASK.md
+- README.md + compatibility.md + IE8.md (contingência) + TASK.md
 
 **Funcionalidades Implementadas:**
 - Formulário de busca com 4 campos (Tag, Data Início, Data Fim, Status)
