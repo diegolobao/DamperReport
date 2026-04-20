@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Teste IE8 - DamperReport</title>
+    <style>
+        /* CSS compatível com IE6+ */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border: 2px solid #2c3e50;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .box {
+            background-color: #3498db;
+            color: #fff;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid #2980b9;
+        }
+        
+        button {
+            background-color: #27ae60;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #229954;
+        }
+        
+        .info {
+            background-color: #f39c12;
+            color: #fff;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        
+        .success {
+            background-color: #27ae60;
+            color: #fff;
+            padding: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Teste de Conexão IE8</h1>
+        <p><strong>Se você está vendo esta página, a conexão de rede está funcionando!</strong></p>
+        
+        <div class="box">
+            <h2>Informações do Teste</h2>
+            <p>📍 <strong>Projeto:</strong> DamperReport</p>
+            <p>🌐 <strong>Navegador:</strong> Internet Explorer 8</p>
+            <p>💻 <strong>Ambiente:</strong> VMware + Windows 7</p>
+            <p>🔧 <strong>Servidor:</strong> Live Server (VS Code)</p>
+        </div>
+        
+        <button onclick="testarJavaScript()">Clique para Testar JavaScript</button>
+        
+        <div id="resultado" class="success"></div>
+        
+        <div class="info">
+            <h3>Próximos Passos:</h3>
+            <ol>
+                <li>✅ Se esta página carregou → Rede e servidor OK</li>
+                <li>⚠️ Problema: IE8 não suporta o projeto principal</li>
+                <li>💡 Solução: Atualizar para IE10 ou IE11</li>
+            </ol>
+        </div>
+        
+        <hr>
+        
+        <h3>Informações Técnicas:</h3>
+        <ul>
+            <li><strong>User Agent:</strong> <span id="userAgent">Carregando...</span></li>
+            <li><strong>Versão IE:</strong> <span id="ieVersion">Detectando...</span></li>
+            <li><strong>Data/Hora:</strong> <span id="dataHora">Carregando...</span></li>
+        </ul>
+    </div>
+
+    <script>
+        // JavaScript compatível com IE5.5+
+        function testarJavaScript() {
+            var div = document.getElementById('resultado');
+            div.style.display = 'block';
+            div.innerHTML = '🎉 JavaScript está funcionando! Data/Hora: ' + new Date().toLocaleString();
+        }
+        
+        // Detectar User Agent
+        window.onload = function() {
+            document.getElementById('userAgent').innerHTML = navigator.userAgent;
+            
+            // Detectar versão do IE
+            var ieVersion = detectIEVersion();
+            document.getElementById('ieVersion').innerHTML = ieVersion || 'Não é Internet Explorer';
+            
+            // Mostrar data/hora
+            document.getElementById('dataHora').innerHTML = new Date().toLocaleString();
+        }
+        
+        // Função para detectar versão do IE (compatível com IE antigo)
+        function detectIEVersion() {
+            var ua = navigator.userAgent;
+            var msie = ua.indexOf('MSIE ');
+            var trident = ua.indexOf('Trident/');
+            
+            if (msie > 0) {
+                // IE 10 ou anterior
+                return 'Internet Explorer ' + parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+            }
+            
+            if (trident > 0) {
+                // IE 11+
+                var rv = ua.indexOf('rv:');
+                return 'Internet Explorer ' + parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+            }
+            
+            return false;
+        }
+    </script>
+</body>
+</html>
