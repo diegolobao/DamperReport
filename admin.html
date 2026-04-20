@@ -66,63 +66,133 @@
             <!-- Painel Administrativo (visível após login) -->
             <div id="admin-panel" class="admin-panel hidden">
                 <div class="admin-welcome">
-                    <h2>Bem-vindo ao Painel Administrativo</h2>
-                    <p>Selecione uma opção no menu abaixo para gerenciar o sistema.</p>
+                    <h2>Painel Administrativo - Gerenciamento de Dados</h2>
+                    <p>Cadastre e gerencie os registros do sistema DamperReport.</p>
                 </div>
 
-                <!-- Menu de navegação entre seções -->
-                <nav class="admin-nav">
-                    <button class="admin-nav-item active" data-section="tag-busca">
-                        Tag Busca
-                    </button>
-                    <button class="admin-nav-item" data-section="tag-report">
-                        Tag Report
-                    </button>
-                    <button class="admin-nav-item" data-section="zsl">
-                        ZSL
-                    </button>
-                    <button class="admin-nav-item" data-section="zsh">
-                        ZSH
-                    </button>
-                </nav>
-
-                <!-- Seção: Tag Busca -->
-                <section id="section-tag-busca" class="admin-section active">
-                    <h3 class="section-title">Gerenciar Tag Busca</h3>
-                    <p class="section-description">Cadastre e gerencie as tags disponíveis para busca de relatórios.</p>
-                    
+                <!-- Formulário de Cadastro/Edição -->
+                <section class="admin-section active">
                     <div class="section-content">
-                        <p class="placeholder-text">Implementação CRUD Tag Busca - Fase 5</p>
-                    </div>
-                </section>
+                        <!-- Formulário unificado -->
+                        <div class="crud-form">
+                            <h4 class="crud-form-title" id="admin-form-title">Novo Registro</h4>
+                            <form id="admin-form">
+                                <input type="hidden" id="record-id" name="id">
+                                
+                                <div class="crud-form-row">
+                                    <div class="crud-form-col">
+                                        <label for="tag-busca" class="form-label">Tag Busca *</label>
+                                        <input 
+                                            type="text" 
+                                            id="tag-busca" 
+                                            name="tag_busca"
+                                            class="form-control"
+                                            placeholder="Ex: DG-5252025"
+                                            required
+                                        >
+                                        <small class="form-help">Formato: XX-XXXXXXX (com hífen)</small>
+                                    </div>
+                                    <div class="crud-form-col">
+                                        <label for="tag-report" class="form-label">Tag Report *</label>
+                                        <input 
+                                            type="text" 
+                                            id="tag-report" 
+                                            name="tag_report"
+                                            class="form-control"
+                                            placeholder="Ex: FGS_DGY_5252025_SLG"
+                                            required
+                                        >
+                                        <small class="form-help">Formato: XXX_XXX_XXXXXXX_XXX (com underline)</small>
+                                    </div>
+                                </div>
 
-                <!-- Seção: Tag Report -->
-                <section id="section-tag-report" class="admin-section">
-                    <h3 class="section-title">Gerenciar Tag Report</h3>
-                    <p class="section-description">Cadastre e gerencie as tags dos relatórios.</p>
-                    
-                    <div class="section-content">
-                        <p class="placeholder-text">Implementação CRUD Tag Report - Fase 5</p>
-                    </div>
-                </section>
+                                <div class="crud-form-row">
+                                    <div class="crud-form-col">
+                                        <label for="zsl" class="form-label">ZSL *</label>
+                                        <input 
+                                            type="text" 
+                                            id="zsl" 
+                                            name="zsl"
+                                            class="form-control"
+                                            placeholder="Ex: FGS_ZSL_5252025_EPT"
+                                            required
+                                        >
+                                    </div>
+                                    <div class="crud-form-col">
+                                        <label for="zsh" class="form-label">ZSH *</label>
+                                        <input 
+                                            type="text" 
+                                            id="zsh" 
+                                            name="zsh"
+                                            class="form-control"
+                                            placeholder="Ex: FGS_ZSH_5252025_EPT"
+                                            required
+                                        >
+                                    </div>
+                                </div>
 
-                <!-- Seção: ZSL -->
-                <section id="section-zsl" class="admin-section">
-                    <h3 class="section-title">Gerenciar ZSL</h3>
-                    <p class="section-description">Cadastre e gerencie ZSL (vinculado a Tag Report).</p>
-                    
-                    <div class="section-content">
-                        <p class="placeholder-text">Implementação CRUD ZSL - Fase 5</p>
-                    </div>
-                </section>
+                                <div class="crud-form-row">
+                                    <div class="crud-form-col">
+                                        <label for="tempo-t1" class="form-label">Tempo T1 *</label>
+                                        <input 
+                                            type="number" 
+                                            id="tempo-t1" 
+                                            name="tempo_t1"
+                                            class="form-control"
+                                            placeholder="Ex: 5"
+                                            step="1"
+                                            min="0"
+                                            required
+                                        >
+                                        <small class="form-help">Valor inteiro</small>
+                                    </div>
+                                    <div class="crud-form-col">
+                                        <label for="tempo-t2" class="form-label">Tempo T2 *</label>
+                                        <input 
+                                            type="number" 
+                                            id="tempo-t2" 
+                                            name="tempo_t2"
+                                            class="form-control"
+                                            placeholder="Ex: 6"
+                                            step="1"
+                                            min="0"
+                                            required
+                                        >
+                                        <small class="form-help">Valor inteiro</small>
+                                    </div>
+                                </div>
 
-                <!-- Seção: ZSH -->
-                <section id="section-zsh" class="admin-section">
-                    <h3 class="section-title">Gerenciar ZSH</h3>
-                    <p class="section-description">Cadastre e gerencie ZSH (vinculado a Tag Report).</p>
-                    
-                    <div class="section-content">
-                        <p class="placeholder-text">Implementação CRUD ZSH - Fase 5</p>
+                                <div id="admin-message" class="message hidden"></div>
+
+                                <div class="crud-form-actions">
+                                    <button type="button" id="admin-cancel" class="btn btn-secondary hidden">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Tabela de listagem unificada -->
+                        <div class="data-table-wrapper">
+                            <table class="data-table" id="admin-data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tag Busca</th>
+                                        <th>Tag Report</th>
+                                        <th>ZSL</th>
+                                        <th>ZSH</th>
+                                        <th>Tempo T1</th>
+                                        <th>Tempo T2</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-tbody">
+                                    <tr>
+                                        <td colspan="8" style="text-align: center; color: #999;">Nenhum registro encontrado</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -131,6 +201,22 @@
         <footer class="footer">
             <p>&copy; 2026 DamperReport. Todos os direitos reservados.</p>
         </footer>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirmar Ação</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-modal-message">Tem certeza que deseja excluir este registro?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-modal-cancel" class="btn btn-secondary">Cancelar</button>
+                <button id="confirm-modal-confirm" class="btn btn-danger">Confirmar</button>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts JS - carregados no final do body -->

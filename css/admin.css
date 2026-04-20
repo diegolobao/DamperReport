@@ -228,6 +228,14 @@
     width: 100%;
 }
 
+.form-help {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
 .crud-form-actions {
     margin-top: 20px;
     text-align: right;

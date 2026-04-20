@@ -93,30 +93,39 @@
         var tagSelect = document.getElementById('search_tag');
         if (!tagSelect) return;
         
-        // Mock de tags - substituir por chamada à API
-        // API.get('/tag_busca', ...) 
-        var mockTags = [
-            'ABC123',
-            'ABC124', 
-            'ABC125',
-            'ABC126',
-            'ABC127',
-            'DEF001',
-            'DEF002',
-            'DEF003',
-            'DEF004',
-            'DEF005',
-            'XYZ999'
-        ];
+        // Carregar tags do localStorage (dados cadastrados no admin)
+        var tags = [];
+        try {
+            var adminData = localStorage.getItem('damper_admin_data');
+            if (adminData) {
+                var records = JSON.parse(adminData);
+                for (var i = 0; i < records.length; i++) {
+                    if (records[i].tag_busca) {
+                        tags.push(records[i].tag_busca);
+                    }
+                }
+            }
+        } catch (e) {
+            console.error('Erro ao carregar tags:', e);
+        }
+        
+        // Se não houver tags no localStorage, usar mock
+        if (tags.length === 0) {
+            tags = [
+                'DG-5252025',
+                'DG-5252026',
+                'DG-5252027'
+            ];
+        }
         
         // Limpar opções existentes (exceto a primeira)
         tagSelect.innerHTML = '<option value="">Selecione</option>';
         
         // Adicionar tags
-        for (var i = 0; i < mockTags.length; i++) {
+        for (var i = 0; i < tags.length; i++) {
             var option = document.createElement('option');
-            option.value = mockTags[i];
-            option.textContent = mockTags[i];
+            option.value = tags[i];
+            option.textContent = tags[i];
             tagSelect.appendChild(option);
         }
     }

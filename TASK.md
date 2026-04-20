@@ -177,124 +177,228 @@ Polyfills implementados:
 
 ## ⚙️ Fase 5: Página Administrativa (admin.html)
 
+**ESTRUTURA REFORMULADA:** Tabela única com 6 colunas ao invés de navegação por seções.
+
 ### Task 5.1: Criar estrutura HTML (admin.html)
 **Elementos principais:**
 - [x] Formulário de login (se não autenticado)
-- [x] Painel de navegação entre seções:
-  - Tag Busca
-  - Tag Report
-  - ZSL
-  - ZSH
+- [x] Formulário unificado com 6 campos:
+  - Tag Busca (formato: XX-XXXXXXX com hífen)
+  - Tag Report (formato: XXX_XXX_XXXXXXX_XXX com underline)
+  - ZSL (formato: XXX_ZSL_XXXXXXX_XXX)
+  - ZSH (formato: XXX_ZSH_XXXXXXX_XXX)
+  - Tempo T1 (inteiro)
+  - Tempo T2 (inteiro)
 - [x] Botão logout
-- [ ] Formulários CRUD para cada entidade
-- [ ] Tabelas para listar registros
-- [ ] Modal de confirmação de exclusão
+- [x] Tabela única com todas as 6 colunas
+- [x] Modal de confirmação de exclusão
+
+**Exemplo de registro:**
+```
+Tag Busca: DG-5252025
+Tag Report: FGS_DGY_5252025_SLG
+ZSL: FGS_ZSL_5252025_EPT
+ZSH: FGS_ZSH_5252025_EPT
+Tempo T1: 5
+Tempo T2: 6
+```
 
 ### Task 5.2: Criar estilos (admin.css)
-- [ ] Layout do painel administrativo
-- [ ] Estilos de formulários CRUD
-- [ ] Tabelas de listagem
-- [ ] Modal de confirmação
-- [ ] Menu de navegação entre seções
-- [ ] Feedback visual (success, error, warning)
+- [x] Layout do painel administrativo
+- [x] Estilos de formulários CRUD
+- [x] Tabela única de listagem (8 colunas: ID + 6 campos + Ações)
+- [x] Modal de confirmação
+- [x] Feedback visual (success, error, warning)
+- [x] Help text para formato dos campos
 
 ### Task 5.3: Implementar lógica (admin.js)
 
-#### 5.3.1: CRUD - Tag Busca
-- [ ] Função `createTagBusca(data)`
-- [ ] Função `readTagBusca()`
-- [ ] Função `updateTagBusca(id, data)`
-- [ ] Função `deleteTagBusca(id)`
-- [ ] Validação de duplicidade
+**CRUD Unificado - Modelo de dados:**
+```javascript
+{
+  id: 1,
+  tag_busca: "DG-5252025",
+  tag_report: "FGS_DGY_5252025_SLG",
+  zsl: "FGS_ZSL_5252025_EPT",
+  zsh: "FGS_ZSH_5252025_EPT",
+  tempo_t1: 5,
+  tempo_t2: 6
+}
+```
 
-#### 5.3.2: CRUD - Tag Report
-- [ ] Função `createTagReport(data)`
-- [ ] Função `readTagReport()`
-- [ ] Função `updateTagReport(id, data)`
-- [ ] Função `deleteTagReport(id)`
-- [ ] Validação de duplicidade
+#### 5.3.1: CRUD Completo
+- [x] Função `createRecord(data)` - Criar novo registro completo
+- [x] Função `readRecords()` - Listar todos os registros  
+- [x] Função `updateRecord(id, data)` - Atualizar registro existente
+- [x] Função `deleteRecord(id)` - Excluir registro
+- [x] Validação de duplicidade (Tag Busca)
+- [x] Validação de campos obrigatórios (todos os 6 campos)
 
-#### 5.3.3: CRUD - ZSL (array vinculado a tag_report)
-- [ ] Função `createZSL(tagReportId, data)`
-- [ ] Função `readZSL(tagReportId)`
-- [ ] Função `updateZSL(id, data)`
-- [ ] Função `deleteZSL(id)`
-- [ ] Validar vínculo com tag_report
+#### 5.3.2: Funcionalidades gerais
+- [x] Renderizar tabela única com todos os dados
+- [x] Modal de confirmação antes de deletar
+- [x] Feedback de operações (sucesso/erro)
+- [x] Formulário inline (criar/editar no mesmo form)
+- [x] Botão cancelar para voltar ao modo criação
 
-#### 5.3.4: CRUD - ZSH (array vinculado a tag_report)
-- [ ] Função `createZSH(tagReportId, data)`
-- [ ] Função `readZSH(tagReportId)`
-- [ ] Função `updateZSH(id, data)`
-- [ ] Função `deleteZSH(id)`
-- [ ] Validar vínculo com tag_report
+**Armazenamento:**
+- [x] Dados armazenados em localStorage (`damper_admin_data`)
+- [x] Estrutura preparada para integração com API REST / Banco de dados
 
-#### 5.3.5: Funcionalidades gerais
-- [ ] Renderizar tabelas de listagem
-- [ ] Modal de confirmação antes de deletar
-- [ ] Feedback de operações (sucesso/erro)
-- [ ] Alternar entre seções sem reload
+**Integração com página de busca:**
+- [x] Campo "Tag" na busca carrega valores do localStorage (tag_busca)
+- [x] Dados serão migrados para .db posteriormente
 
 **Critérios de aceitação:**
-- [ ] Todas as operações CRUD funcionais
-- [ ] Validações aplicadas antes de salvar
-- [ ] Modal de confirmação em exclusões
-- [ ] Navegação entre seções funcional
-- [ ] Compatível com IE10
+- [x] Todas as operações CRUD funcionais
+- [x] Validações aplicadas antes de salvar
+- [x] Modal de confirmação em exclusões
+- [x] Tabela única exibindo todos os 6 campos
+- [x] Compatível com IE10
+
+**Funcionalidades adicionais implementadas:**
+- [x] Geração automática de IDs
+- [x] Verificação de duplicidade por Tag Busca
+- [x] Formulários de edição inline
+- [x] Botão de cancelar edição
+- [x] Mensagens de feedback
+- [x] Help text com exemplos de formato
+- [x] Validação de tipos (números para Tempo T1/T2)
+
+**Status:** ✅ CONCLUÍDA (Versão Reformulada - Tabela Única)
 
 ---
 
-## 🌐 Fase 6: Módulo de API (api.js)
+## 🌐 Fase 6: Integração com Backend (SQLite + FastAPI)
 
-### Task 6.1: Criar módulo centralizado de comunicação
+### Task 6.1: Criar backend Python + FastAPI + SQLite
+**Estrutura do backend:**
+- [ ] Criar diretório `backend/`
+- [ ] Criar `backend/main.py` (aplicação FastAPI)
+- [ ] Criar `backend/database.py` (conexão SQLite)
+- [ ] Criar `backend/models.py` (modelos de dados)
+- [ ] Criar `backend/requirements.txt` (dependências: fastapi, uvicorn, pydantic)
+
+**Banco de dados SQLite:**
+- [ ] Criar arquivo `backend/damper_report.db`
+- [ ] Tabela `records` com colunas:
+  - `id` (INTEGER PRIMARY KEY AUTOINCREMENT)
+  - `tag_busca` (TEXT UNIQUE NOT NULL)
+  - `tag_report` (TEXT NOT NULL)
+  - `zsl` (TEXT NOT NULL)
+  - `zsh` (TEXT NOT NULL)
+  - `tempo_t1` (INTEGER NOT NULL)
+  - `tempo_t2` (INTEGER NOT NULL)
+  - `created_at` (TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
+  - `updated_at` (TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
+
+**Endpoints FastAPI:**
+```python
+# CRUD completo para records
+GET    /api/records              # Listar todos os registros
+GET    /api/records/{id}         # Buscar registro por ID
+POST   /api/records              # Criar novo registro
+PUT    /api/records/{id}         # Atualizar registro
+DELETE /api/records/{id}         # Deletar registro
+
+# Sincronização de dados do localStorage
+POST   /api/sync                 # Migrar dados do localStorage para SQLite
+
+# Busca de relatórios (para página de busca)
+GET    /api/reports?tag=xxx&start_date=xxx&end_date=xxx&status=xxx
+```
+
+**Configurações:**
+- [ ] Habilitar CORS (permitir requisições do frontend)
+- [ ] Configurar porta padrão: 8000
+- [ ] Logging de requisições
+- [ ] Tratamento de erros (400, 404, 500)
+
+**Critérios de aceitação:**
+- [ ] Backend rodando com `uvicorn main:app --reload`
+- [ ] Banco SQLite criado automaticamente ao iniciar
+- [ ] Endpoints respondendo corretamente
+- [ ] CORS configurado para aceitar requisições do frontend
+
+---
+
+### Task 6.2: Atualizar módulo de API frontend (api.js)
 **Funções:**
-- [ ] `apiRequest(method, endpoint, data)` - função genérica
+- [ ] `apiRequest(method, endpoint, data)` - função genérica com XMLHttpRequest
 - [ ] `get(endpoint)` - wrapper para GET
 - [ ] `post(endpoint, data)` - wrapper para POST
 - [ ] `put(endpoint, data)` - wrapper para PUT
 - [ ] `delete(endpoint)` - wrapper para DELETE
+- [ ] `syncToBackend(records)` - sincronizar localStorage com backend
 
-**Implementação:**
-- [ ] Usar `XMLHttpRequest` (compatível IE10) ou polyfill de `fetch`
-- [ ] Configurar headers (Content-Type, Authorization se necessário)
+**Configuração:**
+- [ ] Definir `API_BASE_URL` (ex: `http://localhost:8000` ou IP do servidor)
+- [ ] Usar `XMLHttpRequest` (compatível IE10, NÃO usar fetch)
+- [ ] Configurar headers: `Content-Type: application/json`
+- [ ] Timeout de requisições (30s)
 - [ ] Tratamento de erros HTTP (4xx, 5xx)
-- [ ] Timeout de requisições
 - [ ] Mensagens de erro amigáveis
-
-**Endpoints esperados (FastAPI):**
-```javascript
-// Busca
-GET /api/reports?tag=xxx&start_date=xxx&end_date=xxx&status=xxx
-
-// Tag Busca
-GET    /api/tag_busca
-POST   /api/tag_busca
-PUT    /api/tag_busca/{id}
-DELETE /api/tag_busca/{id}
-
-// Tag Report
-GET    /api/tag_report
-POST   /api/tag_report
-PUT    /api/tag_report/{id}
-DELETE /api/tag_report/{id}
-
-// ZSL
-GET    /api/zsl?tag_report_id={id}
-POST   /api/zsl
-PUT    /api/zsl/{id}
-DELETE /api/zsl/{id}
-
-// ZSH
-GET    /api/zsh?tag_report_id={id}
-POST   /api/zsh
-PUT    /api/zsh/{id}
-DELETE /api/zsh/{id}
-```
 
 **Critérios de aceitação:**
 - [ ] Módulo funcional em IE10
+- [ ] Comunicação com backend estabelecida
 - [ ] Erros tratados com mensagens claras
-- [ ] Timeout configurado (ex: 30s)
 - [ ] Código centralizado e reutilizável
+
+---
+
+### Task 6.3: Implementar dual storage (localStorage + SQLite)
+**Modificações em admin.js:**
+- [ ] Atualizar `saveData()` para sincronizar com backend após salvar no localStorage
+- [ ] Atualizar `handleFormSubmit()` para enviar POST/PUT ao backend
+- [ ] Atualizar `deleteRecord()` para enviar DELETE ao backend
+- [ ] Adicionar tratamento de erros offline (backend indisponível)
+- [ ] Implementar retry automático em caso de falha de rede
+
+**Modificações em search.js:**
+- [ ] Substituir `loadMockData()` por chamada real à API: `GET /api/reports`
+- [ ] Atualizar `searchReports()` para usar backend
+- [ ] Manter cache local opcional para performance
+
+**Fluxo de sincronização:**
+1. Usuário cria/edita/deleta no painel admin
+2. Dados salvos instantaneamente no localStorage (UX rápida)
+3. Requisição enviada ao backend em paralelo
+4. Se backend retornar sucesso: confirmar persistência
+5. Se backend falhar: manter no localStorage e tentar novamente depois
+
+**Critérios de aceitação:**
+- [ ] Dados persistem no localStorage E no SQLite
+- [ ] Sistema funciona offline (somente localStorage)
+- [ ] Sistema sincroniza automaticamente quando backend disponível
+- [ ] Feedback visual de status de sincronização
+
+---
+
+### Task 6.4: Migração de dados e limpeza
+**Script de migração:**
+- [ ] Criar função `migrateLocalStorageToBackend()` em admin.js
+- [ ] Ler dados de `localStorage.getItem('damper_admin_data')`
+- [ ] Enviar via POST `/api/sync` para backend
+- [ ] Validar resposta e confirmar sucesso
+- [ ] Oferecer backup antes de limpar localStorage
+
+**Arquivos a serem removidos:**
+- [ ] **Deletar `js/mock-data.js`** (substituído por dados reais do backend)
+- [ ] **Deletar `js/init-sample-data.js`** (não mais necessário para testes)
+- [ ] Remover tags `<script src="js/mock-data.js"></script>` de index.html
+- [ ] Remover referências a `MockData` em search.js
+
+**Documentação:**
+- [ ] Atualizar README.md com instruções de setup do backend
+- [ ] Documentar processo de migração de dados
+- [ ] Criar guia de instalação (Python, pip, uvicorn)
+
+**Critérios de aceitação:**
+- [ ] Dados do localStorage migrados com sucesso para SQLite
+- [ ] Arquivos mock-data.js e init-sample-data.js removidos
+- [ ] Sistema funcionando 100% com backend
+- [ ] Documentação completa de migração
 
 ---
 
@@ -402,12 +506,12 @@ DELETE /api/zsh/{id}
 | Fase 3 | 3 dias | Fase 1, 2 |
 | Fase 4 | 1 dia | Fase 2 |
 | Fase 5 | 4 dias | Fase 2, 4 |
-| Fase 6 | 2 dias | Fase 2 |
+| Fase 6 (Backend + Migração) | 4 dias | Fase 2, 5 |
 | Fase 7 | 2 dias | Fase 3, 5 |
 | Fase 8 | 1 dia | Fase 2 |
 | Fase 9 | 3 dias | Todas anteriores |
 | Fase 10 | 2 dias | Todas anteriores |
-| **TOTAL** | **~21 dias** | |
+| **TOTAL** | **~23 dias** | |
 
 ---
 
@@ -441,6 +545,20 @@ DELETE /api/zsh/{id}
 - **Fallbacks:** Sempre prever alternativas para features modernas
 - **Documentação:** Código legível e bem comentado é essencial
 
+### ⚠️ Arquivos Temporários (Serão Removidos na Migração)
+- **`js/mock-data.js`:** Dados simulados para testes da página de busca
+  - Status: Temporário - será **DELETADO** quando backend SQLite estiver implementado
+  - Substituído por: Endpoint real `GET /api/reports` do backend
+  
+- **`js/init-sample-data.js`:** Script para popular dados de teste no localStorage
+  - Status: Temporário - será **DELETADO** após migração dos dados para SQLite
+  - Substituição: Dados reais no banco SQLite via backend
+
+- **localStorage (`damper_admin_data`):** Armazenamento local temporário
+  - Status: Continuará como **cache local** após migração
+  - Fonte de verdade: Banco SQLite no backend
+  - Estratégia: Dual storage (local + servidor)
+
 ---
 
 ## 📞 Próximos Passos
@@ -458,23 +576,34 @@ DELETE /api/zsh/{id}
 - ✅ Fase 1: Estrutura do Projeto
 - ✅ Fase 2: Configuração Base (CSS + Polyfills)
 - ✅ Fase 3: Página de Busca (Formulário + Validações + Resultados + Paginação)
+- ✅ Fase 4: Sistema de Autenticação
+- ✅ Fase 5: Página Administrativa com CRUD completo
 
 **Próxima Fase:**
-- ⏳ Fase 4: Sistema de Autenticação
+- ⏳ Fase 6: Integração com Backend (SQLite + FastAPI + Dual Storage)
 
 **Arquivos Criados:**
 - 2 HTML (index.html, admin.html)
 - 4 CSS (normalize, main, search, admin)
-- 7 JS (polyfills, utils, api, auth, search, admin, mock-data)
-- README.md + compatibility.md
+- 9 JS (polyfills, utils, api, auth, search, admin, mock-data*, init-sample-data*)
+  - *Arquivos temporários que serão removidos na migração
+- README.md + compatibility.md + TASK.md
 
 **Funcionalidades Implementadas:**
 - Formulário de busca com 4 campos (Tag, Data Início, Data Fim, Status)
-- Validação completa de formulário
+- Validação completa de formulário com anos bissextos
 - Máscara automática de data (dd/mm/aaaa)
 - Integração com API via XMLHttpRequest
 - Tabela de resultados paginada (10 itens/página)
 - Sistema de mensagens de feedback
 - Mock data para testes
+- **Sistema de autenticação completo (admin/autP58x)**
+- **Painel administrativo com tabela única (6 campos)**
+- **CRUD completo unificado: Tag Busca, Tag Report, ZSL, ZSH, Tempo T1, Tempo T2**
+- **Modal de confirmação para exclusões**
+- **Armazenamento em localStorage (damper_admin_data)**
+- **Validação de duplicidade por Tag Busca**
+- **Formulários inline de criação/edição**
+- **Campo Tag na busca carrega do localStorage dinamicamente**
 
-**Status:** ✅ Fases 1, 2 e 3 completas - Pronto para iniciar Fase 4
+**Status:** ✅ Fases 1-5 completas - Sistema funcional com CRUD unificado e localStorage | Próximo: Backend SQLite + Migração de dados + Remoção de arquivos temporários (mock-data.js, init-sample-data.js)

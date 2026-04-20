@@ -71,8 +71,66 @@
     - Confirmar exclusão com modal
 
 
-    ## 🔗 Integração futura
+## 🔗 Integração futura
 - O frontend deve estar preparado para consumir APIs REST do backend (FastAPI).
 - Todas as chamadas devem ser centralizadas em um módulo `api.js`.
 - Usar `fetch` ou `XMLHttpRequest` compatível com IE10.
 - Tratar erros de rede com mensagens amigáveis ao usuário.
+
+---
+
+## 💾 Estratégia de Persistência de Dados
+
+### Fase Atual (Desenvolvimento)
+- **localStorage:** Armazenamento temporário dos dados cadastrados no painel administrativo
+  - Chave: `damper_admin_data`
+  - Formato: Array de objetos JSON com 6 campos (tag_busca, tag_report, zsl, zsh, tempo_t1, tempo_t2)
+  - Limite: ~5-10MB (suficiente para fase de desenvolvimento)
+- **mock-data.js:** Dados simulados para testes da página de busca
+  - **IMPORTANTE:** Este arquivo será **removido** na migração para backend
+
+### Fase Futura (Produção com Backend)
+- **Dual Storage (localStorage + SQLite):**
+  - **Frontend (IE10):**
+    - localStorage continua como cache local (acesso instantâneo)
+    - XMLHttpRequest para comunicação com backend
+    - Sincronização automática: salvar localmente → enviar ao backend
+  - **Backend (Python + FastAPI + SQLite):**
+    - Banco de dados SQLite (.db) como fonte de verdade
+    - Endpoints REST para CRUD completo
+    - Persistência permanente e multi-usuário
+
+### Fluxo de Migração
+1. **Criar backend:**
+   - Python 3.x + FastAPI + SQLite
+   - Tabela `records` com colunas: id, tag_busca (UNIQUE), tag_report, zsl, zsh, tempo_t1, tempo_t2
+   - Endpoints: GET/POST/PUT/DELETE `/api/records`
+   - Endpoint de sincronização: POST `/api/sync` (migrar dados do localStorage)
+
+2. **Atualizar frontend:**
+   - Modificar `admin.js`: adicionar chamadas de sincronização com backend após salvar no localStorage
+   - Atualizar `api.js`: configurar `API_BASE_URL` (ex: http://localhost:8000)
+   - Implementar tratamento de erros offline (backend indisponível)
+
+3. **Remoção de arquivos obsoletos:**
+   - **Deletar `js/mock-data.js`** (substituído por dados reais do backend)
+   - **Deletar `js/init-sample-data.js`** (não mais necessário)
+   - Atualizar referências nos arquivos HTML
+
+4. **Migração de dados:**
+   - Executar script de sincronização para transferir dados do localStorage para SQLite
+   - Validar integridade dos dados migrados
+   - Confirmar com usuário antes de limpar localStorage (backup)
+
+### Compatibilidade IE10
+- ✅ XMLHttpRequest (IE10 nativo)
+- ❌ fetch API (não suportado, usar polyfill ou evitar)
+- ✅ localStorage (IE10 nativo)
+- ✅ JSON.parse/stringify (IE10 nativo)
+
+### Benefícios da Estratégia Dual Storage
+- **Performance:** Leitura instantânea do cache local
+- **Offline-first:** Sistema funciona mesmo sem conexão com backend
+- **Sincronização:** Dados persistem permanentemente no servidor
+- **Multi-usuário:** Vários usuários podem acessar dados centralizados
+- **Backup:** Duas camadas de armazenamento (local + servidor)
