@@ -5,31 +5,57 @@
  */
 
 /* ========================================================================
-   Login Form
+   Login Section
    ======================================================================== */
 
+.login-section {
+    padding: 20px;
+}
+
 .login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 40px;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .login-title {
     text-align: center;
     margin-top: 0;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     color: #2c3e50;
+    font-size: 24px;
+}
+
+.login-subtitle {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #7f8c8d;
+    font-size: 14px;
 }
 
 .login-form .form-group {
     margin-bottom: 20px;
 }
 
-.login-error {
-    margin-bottom: 20px;
+.login-form .form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.login-form .btn-block {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.login-form .message {
+    margin-bottom: 15px;
 }
 
 /* ========================================================================
@@ -38,51 +64,67 @@
 
 .admin-panel {
     margin-top: 20px;
+    padding: 20px;
 }
 
+.admin-welcome {
+    background-color: #ecf0f1;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    border-left: 4px solid #3498db;
+}
+
+.admin-welcome h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.admin-welcome p {
+    margin: 0;
+    color: #555;
+}
+
+/* Navegação entre seções (botões) */
 .admin-nav {
     background-color: #34495e;
     margin-bottom: 30px;
     border-radius: 4px;
     overflow: hidden;
+    text-align: center;
 }
 
-.admin-nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.admin-nav-list:after {
+.admin-nav:after {
     content: "";
     display: table;
     clear: both;
 }
 
 .admin-nav-item {
-    float: left;
-    width: 25%;
-}
-
-.admin-nav-link {
-    display: block;
-    padding: 15px 20px;
+    display: inline-block;
+    width: 24%;
+    padding: 15px 10px;
+    background-color: #34495e;
     color: #ecf0f1;
-    text-decoration: none;
-    text-align: center;
+    border: none;
     border-right: 1px solid #2c3e50;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s;
 }
 
-.admin-nav-item:last-child .admin-nav-link {
+.admin-nav-item:last-child {
     border-right: none;
 }
 
-.admin-nav-link:hover {
+.admin-nav-item:hover {
     background-color: #2c3e50;
 }
 
-.admin-nav-link.active {
+.admin-nav-item.active {
     background-color: #3498db;
     color: #fff;
 }
@@ -93,10 +135,42 @@
 
 .admin-section {
     display: none;
+    background-color: #fff;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .admin-section.active {
     display: block;
+}
+
+.section-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 22px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.section-description {
+    margin-bottom: 25px;
+    color: #7f8c8d;
+}
+
+.section-content {
+    margin-top: 20px;
+}
+
+.placeholder-text {
+    padding: 40px;
+    text-align: center;
+    color: #95a5a6;
+    font-style: italic;
+    background-color: #ecf0f1;
+    border-radius: 4px;
+    border: 2px dashed #bdc3c7;
 }
 
 .admin-section-title {

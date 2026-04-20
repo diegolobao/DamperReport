@@ -148,21 +148,30 @@ Polyfills implementados:
 
 ### Task 4.1: Criar módulo auth.js
 **Funcionalidades:**
-- [ ] Função `login(username, password)` - validar credenciais
-- [ ] Função `logout()` - limpar sessão
-- [ ] Função `isAuthenticated()` - verificar se está logado
-- [ ] Armazenar sessão em `sessionStorage`
-- [ ] Redirecionar não autenticados
+- [x] Função `login(username, password)` - validar credenciais
+- [x] Função `logout()` - limpar sessão
+- [x] Função `isAuthenticated()` - verificar se está logado
+- [x] Armazenar sessão em `sessionStorage`
+- [x] Redirecionar não autenticados
 
 **Credenciais:**
 - Usuário: `admin`
 - Senha: `autP58x`
 
 **Critérios de aceitação:**
-- [ ] Login funcional
-- [ ] Proteção de página admin
-- [ ] Logout funcional
-- [ ] Sessão persistente durante navegação
+- [x] Login funcional
+- [x] Proteção de página admin
+- [x] Logout funcional
+- [x] Sessão persistente durante navegação
+
+**Funcionalidades adicionais implementadas:**
+- [x] Expiração de sessão (1 hora)
+- [x] Renovação de sessão
+- [x] Mensagens de retorno detalhadas
+- [x] Validação de campos obrigatórios
+- [x] Tratamento de erros de sessionStorage
+
+**Status:** ✅ CONCLUÍDA
 
 ---
 
@@ -170,13 +179,13 @@ Polyfills implementados:
 
 ### Task 5.1: Criar estrutura HTML (admin.html)
 **Elementos principais:**
-- [ ] Formulário de login (se não autenticado)
-- [ ] Painel de navegação entre seções:
+- [x] Formulário de login (se não autenticado)
+- [x] Painel de navegação entre seções:
   - Tag Busca
   - Tag Report
   - ZSL
   - ZSH
-- [ ] Botão logout
+- [x] Botão logout
 - [ ] Formulários CRUD para cada entidade
 - [ ] Tabelas para listar registros
 - [ ] Modal de confirmação de exclusão
