@@ -1,0 +1,181 @@
+/**
+ * search.css
+ * Estilos específicos da página de busca
+ * Compatível com IE10+
+ */
+
+/* ========================================================================
+   Formulário de Busca
+   ======================================================================== */
+
+.search-form {
+    background-color: #ecf0f1;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+}
+
+.search-form-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 20px;
+}
+
+/* Layout de campos em linha (sem Flexbox) */
+.search-form-row {
+    margin-bottom: 15px;
+}
+
+.search-form-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.search-form-col {
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+    margin-bottom: 10px;
+}
+
+.search-form-col:nth-child(2n) {
+    margin-right: 0;
+}
+
+/* Botões do formulário */
+.search-form-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.search-form-actions:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* ========================================================================
+   Área de Resultados
+   ======================================================================== */
+
+.results-container {
+    margin-top: 30px;
+}
+
+.results-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+}
+
+.results-title {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 18px;
+    display: inline-block;
+}
+
+.results-count {
+    display: inline-block;
+    margin-left: 15px;
+    color: #7f8c8d;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.results-table-wrapper {
+    overflow-x: auto;
+}
+
+/* ========================================================================
+   Paginação
+   ======================================================================== */
+
+.pagination {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.pagination:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.pagination-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+
+.pagination-item {
+    display: inline-block;
+    margin: 0 3px;
+}
+
+.pagination-link {
+    display: block;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #3498db;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.pagination-link:hover {
+    background-color: #3498db;
+    color: #fff;
+    border-color: #3498db;
+}
+
+.pagination-link.active {
+    background-color: #3498db;
+    color: #fff;
+    border-color: #3498db;
+    cursor: default;
+}
+
+.pagination-link.disabled {
+    color: #bdc3c7;
+    cursor: not-allowed;
+    background-color: #ecf0f1;
+}
+
+.pagination-link.disabled:hover {
+    background-color: #ecf0f1;
+    color: #bdc3c7;
+    border-color: #ddd;
+}
+
+/* ========================================================================
+   Estado Vazio
+   ======================================================================== */
+
+.no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: #7f8c8d;
+}
+
+.no-results-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.no-results-text {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* ========================================================================
+   Layout Desktop (>= 1024x768)
+   ======================================================================== */
+
+/* Layout otimizado para desktop - sem necessidade de ajustes mobile */
+/* Resolução mínima suportada: 1024x768 */

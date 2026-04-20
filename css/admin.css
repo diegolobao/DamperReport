@@ -1,0 +1,320 @@
+/**
+ * admin.css
+ * Estilos específicos da página administrativa
+ * Compatível com IE10+
+ */
+
+/* ========================================================================
+   Login Form
+   ======================================================================== */
+
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.login-title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.login-form .form-group {
+    margin-bottom: 20px;
+}
+
+.login-error {
+    margin-bottom: 20px;
+}
+
+/* ========================================================================
+   Admin Panel
+   ======================================================================== */
+
+.admin-panel {
+    margin-top: 20px;
+}
+
+.admin-nav {
+    background-color: #34495e;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.admin-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-nav-list:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.admin-nav-item {
+    float: left;
+    width: 25%;
+}
+
+.admin-nav-link {
+    display: block;
+    padding: 15px 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+    text-align: center;
+    border-right: 1px solid #2c3e50;
+    cursor: pointer;
+}
+
+.admin-nav-item:last-child .admin-nav-link {
+    border-right: none;
+}
+
+.admin-nav-link:hover {
+    background-color: #2c3e50;
+}
+
+.admin-nav-link.active {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* ========================================================================
+   Admin Sections
+   ======================================================================== */
+
+.admin-section {
+    display: none;
+}
+
+.admin-section.active {
+    display: block;
+}
+
+.admin-section-title {
+    margin-top: 0;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+    color: #2c3e50;
+}
+
+/* ========================================================================
+   CRUD Forms
+   ======================================================================== */
+
+.crud-container {
+    margin-bottom: 40px;
+}
+
+.crud-form {
+    background-color: #ecf0f1;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+}
+
+.crud-form-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+.crud-form-row {
+    margin-bottom: 15px;
+}
+
+.crud-form-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.crud-form-col {
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+}
+
+.crud-form-col:nth-child(2n) {
+    margin-right: 0;
+}
+
+.crud-form-col-full {
+    width: 100%;
+}
+
+.crud-form-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* ========================================================================
+   Data Tables
+   ======================================================================== */
+
+.data-table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-table th {
+    background-color: #34495e;
+    color: #fff;
+    font-weight: bold;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.data-table-actions {
+    white-space: nowrap;
+}
+
+.data-table-actions .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    margin: 2px;
+}
+
+/* ========================================================================
+   Modal
+   ======================================================================== */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fallback para IE8-9 */
+    background-color: rgb(0, 0, 0);
+    filter: alpha(opacity=50);
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: block;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Fallback para navegadores sem transform */
+    margin-left: -200px;
+    margin-top: -150px;
+    width: 400px;
+    max-width: 90%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0;
+    z-index: 1001;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background-color: #34495e;
+    color: #fff;
+    border-bottom: 1px solid #ddd;
+    border-radius: 4px 4px 0 0;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 18px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    text-align: right;
+    border-top: 1px solid #ddd;
+    background-color: #f5f5f5;
+    border-radius: 0 0 4px 4px;
+}
+
+.modal-footer:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* ========================================================================
+   Array Fields (ZSL/ZSH)
+   ======================================================================== */
+
+.array-field-container {
+    margin-top: 15px;
+}
+
+.array-field-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.array-field-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.array-field-item:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.array-field-value {
+    float: left;
+    width: 70%;
+    padding: 5px 0;
+}
+
+.array-field-remove {
+    float: right;
+}
+
+.array-field-add {
+    margin-top: 10px;
+}
+
+/* ========================================================================
+   Layout Desktop (>= 1024x768)
+   ======================================================================== */
+
+/* Layout otimizado para desktop - resolução mínima: 1024x768 */
+/* Suporte para resoluções: 1024x768, 1280x720, 1366x768, 1920x1080 */
