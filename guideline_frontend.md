@@ -49,8 +49,8 @@
 ## 📄 Estrutura de Páginas
 
 - **Página de Busca**
-  - Campos: Tag, Data Início, Data Fim, Status
-  - Botões: Buscar, Limpar
+  - Campos: Tag (select), Data Início (dd/mm/aaaa), Data Fim (dd/mm/aaaa), Status (Todos, Normal, Falha)
+  - Botões: Buscar (ao clicar chama API de busca do backend), Limpar (Limpa os campos preenchidos)
   - Regras:
     - Validar campos obrigatórios antes da busca
     - Exibir resultados em tabela paginada
@@ -59,10 +59,12 @@
 - **Página Administrativa**
   - Login único: usuário `admin`, senha `autP58x`
   - Funcionalidades:
-    - Cadastro de `tag_busca`
+    - Cadastro de `tag_busca` 
     - Cadastro de `tag_report`
     - Cadastro de `zsl` (array vinculado a `tag_report`)
     - Cadastro de `zsh` (array vinculado a `tag_report`)
+    - Cadastro de zsl_time (inteiro vinculado a `zsl`)
+    - Cadastro de zsh_time (inteiro vinculado a `zsh`)
     - Operações CRUD: incluir, modificar, deletar
   - Regras:
     - Validar duplicidade antes de salvar

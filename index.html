@@ -19,7 +19,99 @@
         </header>
 
         <main class="main-content">
-            <!-- Formulário de busca será implementado aqui -->
+            <!-- Formulário de Busca -->
+            <section class="search-section">
+                <form id="search-form" class="search-form">
+                    <h2 class="search-form-title">Buscar Relatórios</h2>
+                    
+                    <div class="search-form-row-inline">
+                        <div class="search-form-field search-form-field-tag">
+                            <label for="search_tag" class="form-label">Tag *</label>
+                            <select id="search_tag" name="tag" class="form-control" required>
+                                <option value="">Selecione</option>
+                                <!-- Tags serão carregadas via JavaScript -->
+                            </select>
+                        </div>
+                        
+                        <div class="search-form-field search-form-field-date">
+                            <label for="search_start_date" class="form-label">Data Início *</label>
+                            <input 
+                                type="text" 
+                                id="search_start_date" 
+                                name="start_date" 
+                                class="form-control"
+                                placeholder="dd/mm/aaaa"
+                                maxlength="10"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="search-form-field search-form-field-date">
+                            <label for="search_end_date" class="form-label">Data Fim *</label>
+                            <input 
+                                type="text" 
+                                id="search_end_date" 
+                                name="end_date" 
+                                class="form-control"
+                                placeholder="dd/mm/aaaa"
+                                maxlength="10"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="search-form-field search-form-field-status">
+                            <label for="search_status" class="form-label">Status</label>
+                            <select id="search_status" name="status" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Falha">Falha</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="search-form-actions">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                        <button type="button" id="clear-btn" class="btn btn-secondary">Limpar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Área de Resultados -->
+            <section id="results-section" class="results-container hidden">
+                <div class="results-header">
+                    <h3 class="results-title">Resultados</h3>
+                    <span id="results-count" class="results-count"></span>
+                </div>
+                
+                <div class="results-table-wrapper">
+                    <table id="results-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>Tag</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-tbody">
+                            <!-- Resultados serão inseridos aqui via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Paginação -->
+                <nav id="pagination-container" class="pagination hidden">
+                    <ul id="pagination-list" class="pagination-list">
+                        <!-- Paginação será inserida aqui via JavaScript -->
+                    </ul>
+                </nav>
+            </section>
+
+            <!-- Estado Vazio -->
+            <section id="no-results" class="no-results hidden">
+                <div class="no-results-icon">📋</div>
+                <p class="no-results-text">Nenhum resultado encontrado.</p>
+            </section>
         </main>
 
         <footer class="footer">
@@ -31,6 +123,10 @@
     <script src="js/polyfills.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/api.js"></script>
+    
+    <!-- MOCK DATA - Remover em produção quando backend estiver pronto -->
+    <!-- <script src="js/mock-data.js"></script> -->
+    
     <script src="js/search.js"></script>
 </body>
 </html>

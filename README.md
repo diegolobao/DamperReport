@@ -58,7 +58,7 @@ Os arquivos estão prontos para serem desenvolvidos seguindo o [TASK.md](TASK.md
 **Ordem de implementação:**
 - ✅ Fase 1: Estrutura (CONCLUÍDA)
 - ✅ Fase 2: Configuração base (CONCLUÍDA)
-- ⏳ Fase 3: Página de busca
+- ✅ Fase 3: Página de busca (CONCLUÍDA)
 - ⏳ Fase 4: Sistema de autenticação
 - ⏳ Fase 5: Página administrativa
 - ⏳ Fase 6: Módulo de API
@@ -82,11 +82,18 @@ Os arquivos estão prontos para serem desenvolvidos seguindo o [TASK.md](TASK.md
 
 ## 📋 Funcionalidades
 
-### Página de Busca (index.html)
-- Busca de relatórios por Tag, Data Início, Data Fim e Status
-- Exibição de resultados em tabela paginada
-- Validação de campos obrigatórios
-- Sistema de mensagens de feedback
+### Página de Busca (index.html) ✅
+- Formulário com 4 campos: Tag, Data Início (dd/mm/aaaa), Data Fim (dd/mm/aaaa), Status (Todos/Normal/Falha)
+- Máscara automática de data com validação completa (incluindo anos bissextos)
+- Validações: campos obrigatórios, formato de data, data fim >= data início
+- Integração com API REST via XMLHttpRequest
+- Tabela de resultados paginada (10 itens por página)
+- Navegação entre páginas com scroll suave
+- Botão Limpar que restaura estado inicial
+- Contador de resultados
+- Mensagens de feedback (sucesso/erro/warning)
+- Estado vazio quando não há resultados
+- Mock data (opcional) para testes sem backend
 
 ### Página Administrativa (admin.html)
 - Login com autenticação (admin/autP58x)
@@ -116,7 +123,8 @@ Os arquivos estão prontos para serem desenvolvidos seguindo o [TASK.md](TASK.md
 - ✅ `utils.js` - Utilitários (formatDate, sanitizeInput, showMessage, debounce, getFormData, etc.)
 - ✅ `api.js` - Módulo de comunicação API (GET, POST, PUT, DELETE com XHR)
 - ✅ `auth.js` - Sistema de autenticação (login, logout, isAuthenticated)
-- ⏳ `search.js` - Placeholder para lógica de busca (Fase 3)
+- ✅ `search.js` - Lógica completa de busca (validações, máscara, API, paginação)
+- ✅ `mock-data.js` - Dados simulados para testes (REMOVER em produção)
 - ⏳ `admin.js` - Placeholder para lógica admin (Fase 5)
 
 ### Documentação
@@ -261,10 +269,11 @@ DELETE /api/tag_busca/{id}
 
 ## 📞 Próximos Passos
 
-1. ✅ **Fase 1 CONCLUÍDA** - Estrutura do projeto criada
+1. ✅ **Fase 1 CONCLUÍDA** - Estrutura do projeto
 2. ✅ **Fase 2 CONCLUÍDA** - Configuração base (CSS + Polyfills)
-3. ⏳ Implementar **Fase 3** - Página de busca (formulário + resultados + paginação)
-4. ⏳ Continuar conforme [TASK.md](TASK.md)
+3. ✅ **Fase 3 CONCLUÍDA** - Página de busca (formulário + validações + resultados + paginação)
+4. ⏳ Implementar **Fase 4** - Sistema de Autenticação
+5. ⏳ Continuar conforme [TASK.md](TASK.md)
 
 ---
 
@@ -296,5 +305,5 @@ DELETE /api/tag_busca/{id}
 
 ---
 
-**Status:** Fases 1 e 2 Concluídas ✅  
+**Status:** Fases 1, 2 e 3 Concluídas ✅  
 **Última atualização:** Abril 2026

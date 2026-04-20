@@ -45,6 +45,53 @@
     margin-right: 0;
 }
 
+/* Layout inline - todos os campos em uma linha centralizado */
+.search-form-row-inline {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-form-row-inline:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.search-form-field {
+    display: inline-block;
+    float: none;
+    margin-right: 6px;
+    margin-bottom: 10px;
+    vertical-align: top;
+}
+
+/* Larguras proporcionais ajustadas para acomodar gaps - Total: ~95.5% + gaps */
+.search-form-field-tag {
+    width: 33.5%; /* Tag */
+}
+
+.search-form-field-date {
+    width: 19%; /* Data Início e Data Fim */
+}
+
+.search-form-field-status {
+    width: 24%; /* Status */
+    margin-right: 0;
+}
+
+.search-form-field .form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+    font-size: 13px;
+    text-align: left;
+}
+
+.search-form-field .form-control {
+    width: 100%;
+}
+
 /* Botões do formulário */
 .search-form-actions {
     margin-top: 20px;
@@ -55,6 +102,15 @@
     content: "";
     display: table;
     clear: both;
+}
+
+/* Helper text */
+.form-help {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    color: #7f8c8d;
+    font-style: italic;
 }
 
 /* ========================================================================
